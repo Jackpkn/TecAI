@@ -25,4 +25,14 @@ model Project {
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  prompt      Prompt[]
+}
+
+model Prompt {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
 }
