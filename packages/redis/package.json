@@ -1,10 +1,14 @@
 {
-  "name": "redis",
+  "name": "@repo/redis",
   "module": "index.ts",
   "type": "module",
   "private": true,
   "exports": {
-    "./client": "./index.ts"
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/bun": "latest"
