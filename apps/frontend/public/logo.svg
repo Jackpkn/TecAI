@@ -1,0 +1,22 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#e0f2f1"/> <!-- A light teal background -->
+
+  <!-- "T" shape -->
+  <rect x="40" y="40" width="20" height="120" fill="#26a69a"/>  <!-- Teal color -->
+  <rect x="20" y="40" width="60" height="20" fill="#26a69a"/>
+
+  <!-- "A" shape -->
+  <polygon points="100,40 140,160 60,160" fill="#00897b"/>  <!-- Darker Teal -->
+  <rect x="90" y="90" width="20" height="50" fill="#e0f2f1"/>  <!-- light Teal fill to create the A -->
+
+  <!-- Abstract Neural Connection (Circles) -->
+  <circle cx="150" cy="50" r="10" fill="#64ffda"/> <!-- accent color -->
+  <circle cx="170" cy="100" r="10" fill="#64ffda"/>
+  <circle cx="150" cy="150" r="10" fill="#64ffda"/>
+
+  <!-- Optional : A small "i" dot -->
+  <circle cx="100" cy="20" r="5" fill="#00695c"/> <!-- Even Darker Teal -->
+
+</svg>
