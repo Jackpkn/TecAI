@@ -1,9 +1,11 @@
 "use client";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Forward } from "lucide-react";
 import startGeneration from "@/actions/generate";
+import OverlayAuth from "./OverlayAuth";
 
 interface InputCardProps {
   inputValue: string;
@@ -11,6 +13,9 @@ interface InputCardProps {
 }
 
 const InputCard: React.FC<InputCardProps> = ({ inputValue, setInputValue }) => {
+  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setInputValue(e.target.value);
@@ -18,14 +23,30 @@ const InputCard: React.FC<InputCardProps> = ({ inputValue, setInputValue }) => {
     [setInputValue]
   );
 
+  const user = false;
+
   const startGenerate = async () => {
-    console.log("Submitting input:", inputValue);
-    try {
-      await startGeneration(inputValue);
-      console.log("Generation started successfully!");
-    } catch (error) {
-      console.error("Error in generation:", error);
+    if (user) {
+      console.log("Submitting input:", inputValue);
+      try {
+        await startGeneration(inputValue);
+        console.log("Generation started successfully!");
+      } catch (error) {
+        console.error("Error in generation:", error);
+      }
+    } else {
+      setIsModalOpen(true);
     }
+  };
+
+  const handleSignIn = () => {
+    setIsModalOpen(false);
+    router.push("/login");
+  };
+
+  const handleSignUp = () => {
+    setIsModalOpen(false);
+    router.push("/register");
   };
 
   const StartButton = useMemo(() => {
@@ -41,29 +62,40 @@ const InputCard: React.FC<InputCardProps> = ({ inputValue, setInputValue }) => {
   }, [inputValue]);
 
   return (
-    <Card className="w-full max-w-3xl shadow-md rounded-2xl border-2 border-white bg-white/20 backdrop-blur-3xl overflow-hidden">
-      <CardContent className="p-3">
-        <div className="relative">
-          <textarea
-            placeholder="Describe your app idea..."
-            className="w-full py-3 px-5 h-24 md:h-30 bg-gray-50 text-gray-800 rounded-xl 
-                      focus:outline-none focus:ring-0 focus:border-gray-300 
-                      transition-shadow duration-200 ease-in-out placeholder-gray-400 
-                      resize-none leading-relaxed"
-            value={inputValue}
-            onChange={handleInputChange}
-            style={{
-              paddingRight: "7rem",
-              textAlign: "left",
-              lineHeight: "1.5rem",
-              maxHeight: "7.5rem",
-            }}
-            rows={3}
-          />
-          {StartButton}
-        </div>
-      </CardContent>
-    </Card>
+    <>
+      <Card className="w-full max-w-3xl shadow-md rounded-2xl border-2 border-white bg-white/20 backdrop-blur-3xl overflow-hidden">
+        <CardContent className="p-3">
+          <div className="relative">
+            <textarea
+              placeholder="Describe your app idea..."
+              className="w-full py-3 px-5 h-24 md:h-30 bg-gray-50 text-gray-800 rounded-xl 
+                        focus:outline-none focus:ring-0 focus:border-gray-300 
+                        transition-shadow duration-200 ease-in-out placeholder-gray-400 
+                        resize-none leading-relaxed"
+              value={inputValue}
+              onChange={handleInputChange}
+              style={{
+                paddingRight: "7rem",
+                textAlign: "left",
+                lineHeight: "1.5rem",
+                maxHeight: "7.5rem",
+              }}
+              rows={3}
+            />
+            {StartButton}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Modal Overlay */}
+      {isModalOpen && (
+        <OverlayAuth
+          handleSignIn={handleSignIn}
+          handleSignUp={handleSignUp}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
+    </>
   );
 };
 
