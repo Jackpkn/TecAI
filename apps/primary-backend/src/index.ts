@@ -19,8 +19,8 @@ app.use(cors());
 app.use(generalLimiter);
 
 // Routes
-app.use("/api", authRouter);
-app.use("/api", projectRouter);
+app.use(authRouter);
+app.use(projectRouter);
 
 // Health check (without rate limiting)
 app.get("/health", (req, res) => {
