@@ -13,7 +13,12 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Adjust based on your frontend
+    credentials: true,
+  })
+);
 
 // Apply general rate limiting to all routes
 app.use(generalLimiter);
