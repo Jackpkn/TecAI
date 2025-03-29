@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { config } from "./config/config";
+import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.routes";
 import projectRouter from "./routes/project.routes";
 import {
@@ -12,6 +13,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({

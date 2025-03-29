@@ -23,3 +23,9 @@ export const config = {
     url: env.DATABASE_URL,
   },
 } as const;
+
+export const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "strict" as "strict",
+};
