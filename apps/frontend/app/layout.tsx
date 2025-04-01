@@ -4,6 +4,14 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { Toaster } from "sonner";
 
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 const monaSans = Mona_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -20,12 +28,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${monaSans.variable} antialiased`}>
-        <Header />
-        {children}
-        <Toaster />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${monaSans.variable} antialiased`}>
+          {/* <Header /> */}
+          <header className="flex justify-end items-center p-4 gap-4 h-16">
+            <SignedOut>
+              <SignInButton />
+              <SignUpButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

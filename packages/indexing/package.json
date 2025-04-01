@@ -1,6 +1,0 @@
-{
-  "name": "@repo/indexing",
-  "module": "index.ts",
-  "type": "module",
-  "private": true
-}
