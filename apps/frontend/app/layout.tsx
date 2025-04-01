@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
 import { Mona_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import { Toaster } from "sonner";
 
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { Toaster } from "sonner";
+import { ClerkProvider } from "@clerk/nextjs";
+import Header from "@/components/Header";
+
 const monaSans = Mona_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,15 +26,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${monaSans.variable} antialiased`}>
           {/* <Header /> */}
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
+          <Header />
           {children}
           <Toaster />
         </body>
