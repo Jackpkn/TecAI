@@ -1,3 +1,4 @@
+// components/Header.js
 import Image from "next/image";
 import { Button } from "./ui/button";
 import logo from "../public/logo.svg";
@@ -9,12 +10,13 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-function Header() {
-  let user = 0;
+import UserInfo from "./UserInfo";
 
+// This is a server component
+function Header() {
   return (
-    <div className="w-full items-cente flex justify-center">
-      <header className="flex  items-center justify-between p-4 gap-4 h-16  px-3 sm:px-8 rounded-4xl border-2 border-white bg-white/10 backdrop-blur-lg fixed top-3   z-50 w-2/3 shadow-md overflow-hidden">
+    <div className="w-full items-center flex justify-center">
+      <header className="flex items-center justify-between p-4 gap-4 h-16 px-3 sm:px-8 rounded-4xl border-2 border-white bg-white/10 backdrop-blur-lg fixed top-3 z-50 w-2/3 shadow-md overflow-hidden">
         <Link href="/">
           <div className="flex items-center">
             <Image src={logo} alt="logo" width={50} height={50} />
@@ -25,13 +27,15 @@ function Header() {
         <div className="flex gap-4">
           <SignedOut>
             <SignInButton>
-              <Button> Sign In</Button>
+              <Button>Sign In</Button>
             </SignInButton>
             <SignUpButton>
-              <Button> Sign up</Button>
+              <Button>Sign up</Button>
             </SignUpButton>
           </SignedOut>
           <SignedIn>
+            {/* Move client component to a separate file */}
+            <UserInfo />
             <UserButton />
           </SignedIn>
         </div>
@@ -39,4 +43,5 @@ function Header() {
     </div>
   );
 }
+
 export default Header;

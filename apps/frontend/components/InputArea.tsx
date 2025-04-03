@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Forward } from "lucide-react";
 import startGeneration from "@/actions/generate";
 import OverlayAuth from "./OverlayAuth";
+import { useUser } from "@clerk/nextjs";
 
 interface InputCardProps {
   inputValue: string;
@@ -13,6 +14,7 @@ interface InputCardProps {
 }
 
 const InputCard: React.FC<InputCardProps> = ({ inputValue, setInputValue }) => {
+  const { isSignedIn, user, isLoaded } = useUser();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,8 +24,6 @@ const InputCard: React.FC<InputCardProps> = ({ inputValue, setInputValue }) => {
     },
     [setInputValue]
   );
-
-  const user = false;
 
   const startGenerate = async () => {
     if (user) {
@@ -37,16 +37,6 @@ const InputCard: React.FC<InputCardProps> = ({ inputValue, setInputValue }) => {
     } else {
       setIsModalOpen(true);
     }
-  };
-
-  const handleSignIn = () => {
-    setIsModalOpen(false);
-    router.push("/login");
-  };
-
-  const handleSignUp = () => {
-    setIsModalOpen(false);
-    router.push("/register");
   };
 
   const StartButton = useMemo(() => {
@@ -63,38 +53,27 @@ const InputCard: React.FC<InputCardProps> = ({ inputValue, setInputValue }) => {
 
   return (
     <>
-      <Card className="w-full max-w-3xl shadow-md rounded-2xl border-2 border-white bg-white/20 backdrop-blur-3xl overflow-hidden">
-        <CardContent className="p-3">
-          <div className="relative">
-            <textarea
-              placeholder="Describe your app idea..."
-              className="w-full py-3 px-5 h-24 md:h-30 bg-gray-50 text-gray-800 rounded-xl 
-                        focus:outline-none focus:ring-0 focus:border-gray-300 
+      <div className="relative">
+        <textarea
+          placeholder="Describe your app idea..."
+          className="w-full py-3 px-5 h-24 md:h-30 border-gray border-[1px] bg-[#30302e] text-white rounded-xl 
+                        focus:outline-none focus:ring-0  
                         transition-shadow duration-200 ease-in-out placeholder-gray-400 
                         resize-none leading-relaxed"
-              value={inputValue}
-              onChange={handleInputChange}
-              style={{
-                paddingRight: "7rem",
-                textAlign: "left",
-                lineHeight: "1.5rem",
-                maxHeight: "7.5rem",
-              }}
-              rows={3}
-            />
-            {StartButton}
-          </div>
-        </CardContent>
-      </Card>
+          value={inputValue}
+          onChange={handleInputChange}
+          style={{
+            // paddingRight: "7rem",
+            textAlign: "left",
+            lineHeight: "1.5rem",
+          }}
+          rows={3}
+        />
+        {StartButton}
+      </div>
 
       {/* Modal Overlay */}
-      {isModalOpen && (
-        <OverlayAuth
-          handleSignIn={handleSignIn}
-          handleSignUp={handleSignUp}
-          setIsModalOpen={setIsModalOpen}
-        />
-      )}
+      {isModalOpen && <OverlayAuth setIsModalOpen={setIsModalOpen} />}
     </>
   );
 };

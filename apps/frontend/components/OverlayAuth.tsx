@@ -1,16 +1,11 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 interface OverlayProps {
-  handleSignIn: () => void;
-  handleSignUp: () => void;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const OverlayAuth = ({
-  handleSignIn,
-  handleSignUp,
-  setIsModalOpen,
-}: OverlayProps) => {
+const OverlayAuth = ({ setIsModalOpen }: OverlayProps) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
       <div className="bg-white/10 backdrop-blur-xl border-2 border-white/20 rounded-2xl p-6 w-full max-w-md shadow-lg">
@@ -21,18 +16,16 @@ const OverlayAuth = ({
           Create an account or sign in to send messages
         </p>
         <div className="flex gap-4 mt-6 justify-center">
-          <Button
-            className="bg-transparent border-2 border-white text-white hover:bg-white/20"
-            onClick={handleSignIn}
-          >
-            Sign In
-          </Button>
-          <Button
-            className="bg-white text-black hover:bg-white/90"
-            onClick={handleSignUp}
-          >
-            Sign Up
-          </Button>
+          <SignInButton>
+            <Button className="bg-transparent border-2 border-white text-white hover:bg-white/20">
+              Sign In
+            </Button>
+          </SignInButton>
+          <SignUpButton>
+            <Button className="bg-white text-black hover:bg-white/90">
+              Sign Up
+            </Button>
+          </SignUpButton>
         </div>
         <Button
           variant="ghost"
